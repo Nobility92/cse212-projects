@@ -7,13 +7,18 @@ public static class Arrays
     /// </summary>
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
-    {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
-        return []; // replace this return statement with your own
+       {
+        // Step 1: Create an array to hold 'count' elements
+        double[] result = new double[length];
+        
+        // Step 2: Use a loop to populate the array with multiples of 'start'
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1);
+        }
+        
+        // Step 3: Return the array
+        return result;
     }
 
     /// <summary>
@@ -25,9 +30,17 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Step 1: Determine the actual rotation amount using modulo
+        int shift = amount % data.Count;
+        if (shift == 0) return; // No rotation needed
+        
+        // Step 2: Use list slicing to separate the last 'shift' elements and the rest
+        List<int> tail = data.GetRange(data.Count - shift, shift);
+        List<int> head = data.GetRange(0, data.Count - shift);
+        
+        // Step 3: Clear original list and rebuild it with rotated values
+        data.Clear();
+        data.AddRange(tail); // Add the last 'shift' elements to the front
+        data.AddRange(head); // Append the remaining elements
     }
 }
