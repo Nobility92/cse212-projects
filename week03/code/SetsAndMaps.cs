@@ -21,9 +21,31 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        HashSet<string> seenWords = new();
+    List<string> result = new();
+
+    foreach (var word in words)
+    {
+        string reversed = new string(word.Reverse().ToArray());
+
+        // Ensure we do not process words with identical characters (e.g., "aa")
+        if (word[0] == word[1]) 
+            continue;
+
+        // If the reversed word already exists, we have a symmetric pair
+        if (seenWords.Contains(reversed))
+        {
+            result.Add($"{reversed} & {word}");
+        }
+        else
+        {
+            seenWords.Add(word);
+        }
     }
+
+    return result.ToArray();
+}
+    
 
     /// <summary>
     /// Read a census file and summarize the degrees (education)
@@ -43,9 +65,20 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
-        }
+            // Ensure there are at least 4 columns
+        if (fields.Length < 4)
+            continue;
 
-        return degrees;
+        string degree = fields[3].Trim(); // Extract and clean degree name
+
+        if (degrees.ContainsKey(degree))
+            degrees[degree]++;
+        else
+            degrees[degree] = 1;
+    }
+
+    return degrees;
+        
     }
 
     /// <summary>
@@ -67,8 +100,40 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
-    }
+        //Normalize the words (remove spaces and convert to lowercase)
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        //If lengths don't match, they cannot be anagrams
+        if (word1.Length != word2.Length)
+          return false;
+
+        //Count the frequency of each character in word1
+        Dictionary<char, int> charCount = new();
+
+        foreach (char c in word1)
+        {
+         if (charCount.ContainsKey(c))
+             charCount[c]++;
+            else
+            charCount[c] = 1;
+        }
+
+        //Decrease the frequency for each character in word2
+        foreach (char c in word2)
+        {
+        if (!charCount.ContainsKey(c)) 
+            return false; // Character not found in first word
+
+        charCount[c]--;
+
+        if (charCount[c] == 0) 
+            charCount.Remove(c); // Remove key when count reaches zero
+        }
+
+        //If dictionary is empty, words are anagrams
+        return charCount.Count == 0;
+        }
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
