@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 public static class Arrays
 {
     /// <summary>
@@ -43,4 +45,5 @@ public static class Arrays
         data.AddRange(tail); // Add the last 'shift' elements to the front
         data.AddRange(head); // Append the remaining elements
     }
+    
 }
