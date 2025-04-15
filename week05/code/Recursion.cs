@@ -171,17 +171,15 @@ public static class Recursion
 
         // TODO Start Problem 5
         // ADD CODE HERE
-        // Base case: if it's an invalid move, stop
+        
         if (!maze.IsValidMove(x, y, currPath))
             return;
 
-    // Add the current position to the path
         currPath.Add((x, y));
 
-    // Check if we've reached the end
         if (maze.IsEnd(x, y))
         {
-        results.Add(currPath.AsString()); // Add a copy of the current path as a string
+        results.Add(currPath.AsString()); 
          }
             else
         {
